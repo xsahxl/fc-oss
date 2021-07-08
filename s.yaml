@@ -1,0 +1,27 @@
+edition: 1.0.0
+name: appName
+access: default
+services:
+  rest-api:
+    component: devsapp/jamstack-api
+    actions:
+      pre-deploy:
+        - run: npm i
+          path: functions
+    props:
+      region: cn-hangzhou
+      sourceCode: functions
+      route:
+        - /user
+      bucket: shl-website-for-delete-01
+      project: shl-delete-2
+  website-base:
+    component: devsapp/website
+    props:
+      bucket: shl-website-for-delete-01
+      src:
+        publishDir: ./website-base
+        index: index.html
+      region: cn-hangzhou
+      hosts:
+        - host: auto
